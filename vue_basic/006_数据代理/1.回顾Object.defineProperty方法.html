@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="../js/vue.js"></script>
+</head>
+<body>
+    <div id="root">
+        <h1>你好,{{name}}</h1>
+    </div>
+
+    <script>
+        let number = 18
+        let person = {
+            name:'张三',
+            sex:'男',
+            // 直接写age:18时，该值可修改，删除
+            // age:18
+        }
+        
+        // 通过defineProperty设置的对象默认是不可被枚举，不可更改的
+        Object.defineProperty(person,'age',{
+            // 当有人读取person的age属性时，get函数(getter)会被调用
+            // get函数的返回值就是age的值
+            get(){
+                console.log('有人读取age属性了')
+                return number
+            },
+           
+            // 当有人修改person的age属性时，set函数(setter)会被调用
+            // 且会收到修改的具体值
+            set(value){
+                console.log('有人修改age属性了,值是',value)
+                number=value
+            }
+
+
+            // enumerable:true // 控制该属性是否可枚举，默认值为false
+
+            // writable:true // 控制属性是否可修改，默认为false
+
+            // configurable:true // 控制属性是否可被删除，默认值为false
+        })
+        
+
+        // 通过number变量控制person的age属性值
+
+
+        console.log(Object.keys(person))
+        for (let key in person){
+            console.log('@',person[key])
+        }
+        console.log(person)
+
+    </script>
+</body>
+</html>

@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="../js/vue.js"></script>
+</head>
+<body>
+    <div id="root">
+        <!--
+            读取name时，实际上是通过getter方法获取的
+        -->
+        <h1>学校名称:{{name}}</h1>
+        <h1>学校地址:{{address}}</h1>
+    </div>
+
+    <script>
+        let data = {
+                name:'张三',
+                address:'北京'
+        }
+
+        const vm = new Vue({
+            el:'#root',
+            /*
+                本质上 vm._data == data == options.data
+                类似引用传递，修改其中任意变量的属性，其他变量会一起修改
+                上述所有实例引用了同一个对象。
+            */
+            data    
+        })
+        
+        console.log(vm)
+</script>
+</body>
+</html>

@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="../js/vue.js"></script>
+</head>
+<body>
+    <!--视图View-->
+    <div id="root">
+        <h1>学校名称:{{name}}</h1>
+        <h1>学校地址:{{address}}</h1>
+        <!-- 
+            vm上的所有属性，及vue原型中的所有属性，都可以在视图中直接使用
+            <h1>测试:{{$options}}</h1>
+         -->
+    </div>
+    
+    <script>
+        // 视图模型(ViewModel)
+        const vm = new Vue({
+            el:'#root',
+            //模型数据(Model)
+            data:{
+                name:'张三',
+                address:'北京'
+            }
+        })
+        console.log(vm)
+    </script>
+</body>
+</html>

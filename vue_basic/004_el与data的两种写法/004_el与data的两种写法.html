@@ -14,14 +14,26 @@
 
     <script>
         const v = new Vue({
-            data:{
-                name:'张三'
+            // el的第一种写法:
+            // el:'#root',
+
+            // data的第一种写法:对象式
+            // data:{
+            //     name:'张三'
+            // }
+
+            // data的第二种写法:函数式
+            // 返回一个对象
+            data(){
+                console.log('@@@',this) //this指向vue实例
+                return {
+                    name:'张三'
+                }
             }
+            // 注意由Vue管理的函数，一定不要写箭头函数，否则this不再是Vue实例
         })
         console.log(v)
-        setTimeout(()=>{
-            v.$mount('#root')
-        },1000)
+        v.$mount('#root')
     </script>
 </body>
 </html>
