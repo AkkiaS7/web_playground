@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="../js/vue.js"></script>
+</head>
+<body>
+    <div id="root">
+        <!--通过v-model双向绑定时，数据的任何变化都会导致用到该数据的模板重新解析-->
+        姓: <input type="text" v-model:value="lastName"><br>
+        名: <input type="text" v-model:vlaue="firstName"><br>
+        <!--注意下面通过fullName函数获得具体值,必须加()，与之前的事件函数不同-->
+        全名: <span>{{fullName()}}</span><br>
+        全名: <span>{{fullName()}}</span><br>
+        全名: <span>{{fullName()}}</span><br>
+        全名: <span>{{fullName()}}</span><br>
+    </div>
+
+    <script>
+        new Vue({
+            el:'#root',
+            data:{
+                lastName:"张",
+                firstName:"三"
+            },
+            methods:{
+                // 每次调用都将触发计算，无缓存机制
+                fullName(){
+                    // 此时this是vue实例
+                    console.log('@',this)
+                    return this.lastName+'-'+this.firstName
+                }
+            }
+        })
+    </script>
+</body>
+</html>

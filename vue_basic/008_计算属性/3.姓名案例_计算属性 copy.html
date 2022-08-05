@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="../js/vue.js"></script>
+</head>
+<body>
+    <div id="root">
+        <!--通过v-model双向绑定时，数据的任何变化都会导致用到该数据的模板重新解析-->
+        姓: <input type="text" v-model:value="lastName"><br>
+        名: <input type="text" v-model:vlaue="firstName"><br>
+        测试: <input type="text" v-model:vlaue="fullName"><br>
+        <!--注意下面通过fullName函数获得具体值,必须加()，与之前的事件函数不同-->
+        全名: <span>{{fullName}}</span><br>
+        全名: <span>{{fullName}}</span><br>
+        全名: <span>{{fullName}}</span><br>
+        全名: <span>{{fullName}}</span><br>
+    </div>
+
+    <script>
+        new Vue({
+            el:'#root',
+            data:{
+                lastName:"张",
+                firstName:"三"
+            },
+            /*
+                computed属性存在缓存，只有当初次读取或依赖的数据发生变化时，才会重新调用get()
+                底层通过object.defineProperty()提供的getter,setter
+                computed属性最终出现在vm上，可以直接读取使用
+                如果要修改计算属性，需要通过setter修改
+            */
+            computed:{
+                fullName:{
+                    // 当fullName被读取时, get就会被调用, 返回值作为fullName的值
+                    get(){
+                        console.log('get被调用了')
+                        // 此时this是vue实例
+                        console.log('@',this)
+                        return this.lastName+'-'+this.firstName
+                    },
+
+                    // 当fullName被赋值时, set就会被调用, 参数作为fullName的值
+                    set(value){
+                        console.log('set被调用了',value)
+                        const arr = value.split('-')
+                        this.lastName = arr[0]
+                        this.firstName = arr[1]
+                    }
+                }
+            }
+        })
+    </script>
+</body>
+</html>
