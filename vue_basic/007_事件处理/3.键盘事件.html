@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="../js/vue.js"></script>
+</head>
+<body>
+    <div id="root">
+        <h2>欢迎来到{{name}}学习</h2>
+        <!--
+            keyup: 松开时触发
+            keydown: 按下时触发
+        -->
+        <input type="text" placeholder="按下回车提示输入" @keyup.altenter="showInfo">
+    </div>
+
+    <script>
+        Vue.config.keyCodes.altenter = 13;
+        const vm = new Vue({
+            el:'#root',
+            data:{
+                name:'张三'
+            },
+            methods:{
+                // 注意下面的showInfo不可用箭头函数，否则this不是Vue实例，而是window -->
+                showInfo(event){
+                    /*
+                        1.Vue中常见的按键别名：
+                            回车 => enter
+                            删除 => delete
+                            退格 => delete
+                            退出 => esc
+                            空格 => space
+                            制表符 => tab (特殊，必须配合keydown事件使用)
+                            上 => up
+                            下 => down
+                            左 => left
+                            右 => right
+                        
+                        2.Vue未提供别名的按键，可用原始key值绑定，
+                          注意要转为kebab-cas(如caps-lock)
+
+                        3.系统修饰键(ctrl, alt, shift, meta)
+                            a. 配合keyup使用: 按下修饰建的同时，再按下其他键，并释放其它键
+                               组合键使用方法(如ctrl+y): @keyup.ctrl.y
+                            b. 配合keydown使用: 正常触发
+                            
+                        
+                        4.可以使用keyCode指定具体按键(不推荐)
+
+                        5.Vue.config.keyCodes.自定义键名 = keyCode 可以定制按键别名
+
+                    */
+                    
+                    console.log("key:",event.key,"keyCode:",event.keyCode)
+                    if(event.keyCode == 13){
+                        alert('您输入的是'+event.target.value)
+                    }
+                    console.log(event.target.value)
+                }
+            }
+        })
+    </script>
+</body>
+</html>

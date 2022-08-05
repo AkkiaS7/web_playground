@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="../js/vue.js"></script>
+</head>
+<body>
+    <div id="root">
+        <h2>欢迎来到{{name}}学习</h2>
+        <!--v-on:clisk="showInfo" 点击这个button时调用showInfo函数-->
+        <button v-on:click="showInfo1">点我提示信息1</button>
+        <!--可以用@click简写，不写()等价于($event)-->
+        <button @click="showInfo2(66,$event)">点我提示信息2</button>
+    </div>
+
+    <script>
+        const vm = new Vue({
+            el:'#root',
+            data:{
+                name:'张三'
+            },
+            methods:{
+                // 注意下面的showInfo不可用箭头函数，否则this不是Vue实例，而是window -->
+                showInfo1(event){
+                    // console.log(event.target)
+                    // console.log(this === vm) // true, 此处的this是vm
+                    alert('欢迎来到'+this.name+'学习')
+                },
+                showInfo2(number,event){
+                    console.log(number)
+                    console.log(event)
+                    alert('欢迎来到'+this.name+'学习')
+                } 
+            }
+        })
+    </script>
+</body>
+</html>
