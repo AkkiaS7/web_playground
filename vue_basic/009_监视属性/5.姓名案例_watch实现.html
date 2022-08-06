@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="../js/vue.js"></script>
+</head>
+<body>
+    <!--
+        computed与watch之间的区别:
+            1. computed能完成的，watch也能完成
+            2. watch能完成的功能，computed不一定能完成，如watch可以进行异步操作
+        两个重要原则:
+            1. 被Vue管理的函数，最好写成普通函数，这样this才能指向vue实例或组件实例对象
+            2. 所有不被Vue管理的函数（定时器回调，ajax回调，Promise的回调等），最好写成箭头函数，
+               这样this指向才是vue实例或组件实例对象
+    -->
+    <div id="root">
+        <!--通过v-model双向绑定时，数据的任何变化都会导致用到该数据的模板重新解析-->
+        姓: <input type="text" v-model:value="lastName"><br>
+        名: <input type="text" v-model:vlaue="firstName"><br>
+        测试: <input type="text" v-model:vlaue="fullName"><br>
+        <!--注意下面通过fullName函数获得具体值,必须加()，与之前的事件函数不同-->
+        全名: <span>{{fullName}}</span><br>
+    </div>
+
+    <script>
+        new Vue({
+            el:'#root',
+            data:{
+                lastName:"张",
+                firstName:"三",
+                fullName:"张-三"
+            },
+            watch:{
+                firstName(newValue){
+                    // 注意setTimeout的作用域问题
+                    // 其不由vue管理，而是由浏览器管理
+                    // 使用箭头函数以保证this指向vue实例
+                    setTimeout(()=>{
+                        console.log(this)
+                        this.fullName = this.lastName+'-'+newValue
+                    },1000)
+                },
+                lastName(newValue){
+                    this.fullName = newValue+'-'+this.firstName
+                }
+            }
+        })
+    </script>
+</body>
+</html>

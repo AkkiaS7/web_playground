@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="../js/vue.js"></script>
+</head>
+<body>
+    <div id="root">
+        <h2>今天天气很{{info}}</h2>
+        <!--模板中可以(且仅可以)直接读写vm对象，但复杂操作最好还是写进methods中-->
+        <button @click="toggle">切换天气</button>
+        <hr>
+        <h3>a的值是:{{numbers.a}}</h3>
+        <button @click="numbers.a++">点我让a++</button>
+        <h3>b的值是:{{numbers.b}}</h3>
+        <button @click="numbers.b++">点我让b++</button>
+        <hr>
+        <button @click="numbers={a:666,b:888}">彻底替换numbers</button>
+    </div>
+
+    <script>
+        const vm = new Vue({
+            el:'#root',
+            data:{
+                isHot: true,
+                numbers:{
+                    a:1,
+                    b:1
+                }
+            },
+            computed:{
+                info(){
+                    return this.isHot?'炎热':'凉爽'
+                }
+            },
+            methods:{
+                toggle(){
+                    this.isHot = !this.isHot
+                }
+            },
+            // 配置监视对象
+            watch:{
+                isHot:{
+                    immediate:true, // 被监视对象初始化时立即触发handler函数
+
+                    // 当isHost变化时, 会调用handler函数
+                    // 且会传入新值和旧值
+                    handler(newValue,oldValue){
+                        console.log('isHot变化了,新值是',newValue,'旧值是',oldValue)
+                    }
+                },
+                // 注意监视多级结构中某个属性的变化需要完整使用单引号形式
+                // 'numbers.a':{
+                //     handler(){
+                //         console.log('a变化了')
+                //     }
+                // }
+
+                // 为了监视多级结构中所有属性的变化
+                // 需要开启深度监视，否则仅监视属性本身被改变时才触发handler函数
+                numbers:{
+                    deep:true, // 深度监视, 启用后才能够监视子结构的变化
+                    handler(newValue,oldValue){
+                        console.log('numbers变化了,新值是',newValue,'旧值是',oldValue)
+                    }
+                }
+
+            }
+        })
+    </script>
+</body>
+</html>

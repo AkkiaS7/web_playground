@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="../js/vue.js"></script>
+</head>
+<body>
+    <div id="root">
+        <h2>今天天气很{{info}}</h2>
+        <!--模板中可以(且仅可以)直接读写vm对象，但复杂操作最好还是写进methods中-->
+        <button @click="isHot=!isHot">切换天气</button>
+    </div>
+
+    <script>
+        new Vue({
+            el:'#root',
+            data:{
+                isHot: true
+            },
+            computed:{
+                info(){
+                    return this.isHot?'炎热':'凉爽'
+                }
+            },
+            methods:{
+                /* toggle(){
+                    this.isHot = !this.isHot
+                } */
+            }
+        })
+    </script>
+</body>
+</html>

@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="../js/vue.js"></script>
+</head>
+<body>
+    <div id="root">
+        <h2>今天天气很{{info}}</h2>
+        <!--模板中可以(且仅可以)直接读写vm对象，但复杂操作最好还是写进methods中-->
+        <button @click="isHot=!isHot">切换天气</button>
+    </div>
+
+    <script>
+        const vm = new Vue({
+            el:'#root',
+            data:{
+                isHot: true
+            },
+            computed:{
+                info(){
+                    return this.isHot?'炎热':'凉爽'
+                }
+            },
+            methods:{
+                /* toggle(){
+                    this.isHot = !this.isHot
+                } */
+            },
+            // 配置监视对象（写法一）
+            /* watch:{
+                isHot:{
+                    immediate:true, // 被监视对象初始化时立即触发handler函数
+
+                    // 当isHost变化时, 会调用handler函数
+                    // 且会传入新值和旧值
+                    handler(newValue,oldValue){
+                        console.log('isHot变化了,新值是',newValue,'旧值是',oldValue)
+                    }
+                    
+                }
+            } */
+        })
+
+        // 配置监视对象（写法二）
+        vm.$watch('isHot',{
+            immediate:true, // 被监视对象初始化时立即触发handler函数
+
+            // 当isHost变化时, 会调用handler函数
+            // 且会传入新值和旧值
+            handler(newValue,oldValue){
+                console.log('isHot变化了,新值是',newValue,'旧值是',oldValue)
+            }
+        })
+    </script>
+</body>
+</html>
